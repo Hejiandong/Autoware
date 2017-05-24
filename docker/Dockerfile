@@ -1,4 +1,4 @@
-FROM nvidia/cuda:8.0-ubuntu14.04
+FROM nvidia/cuda:8.0-devel-ubuntu14.04
 MAINTAINER Yuki Iida <aiueo.0409@gmail.com>
 
 RUN apt-get update && apt-get install -y \
@@ -12,11 +12,20 @@ RUN apt-get update && apt-get install -y \
         ros-indigo-desktop-full ros-indigo-nmea-msgs \
         ros-indigo-nmea-navsat-driver ros-indigo-sound-play \
         ros-indigo-jsk-visualization \
+	ros-indigo-grid-map \
+	ros-indigo-controller-manager \
+	ros-indigo-ros-control \
+	ros-indigo-ros-controllers \
+	ros-indigo-gazebo-ros-control \
+	ros-indigo-sicktoolbox \
+	ros-indigo-sicktoolbox-wrapper \
+	ros-indigo-joystick-drivers \
+	ros-indigo-novatel-span-driver \
         ros-indigo-perception-pcl \
         ros-indigo-openni-launch \
         ros-indigo-turtlebot-simulator \
         libnlopt-dev freeglut3-dev qtbase5-dev \
-        libqt5opengl5-dev libssh2-1-dev libarmadillo-dev libpcap-dev gksu
+        libqt5opengl5-dev libssh2-1-dev libarmadillo-dev libpcap-dev gksu libgl1-mesa-dev
 RUN rosdep init \
         && rosdep update \
         && echo "source /opt/ros/indigo/setup.bash" >> ~/.bashrc
@@ -45,6 +54,8 @@ RUN apt-get install -y \
 
 # Install OpenCV
 RUN apt-get update && apt-get -y install libopencv-dev build-essential cmake git libgtk2.0-dev pkg-config python-dev python-numpy libdc1394-22 libdc1394-22-dev libjpeg-dev libpng12-0 libjasper-dev libavcodec-dev libavformat-dev libswscale-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libv4l-dev libtbb-dev libqt4-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev x264 v4l-utils unzip
+
+RUN apt-get -y install libglew-dbg libglew-dev libglew1.10 libglewmx-dbg libglewmx-dev libglewmx1.10 glew-utils
 
 RUN wget https://github.com/opencv/opencv/archive/2.4.13.zip && \
     unzip 2.4.13.zip && \
